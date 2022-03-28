@@ -1,0 +1,21 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+header {
+    padding: 60px;
+    text-align: center;
+    background: #1abc9c;
+    color: white;
+    font-size: 30px;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+main {
+    display: flex;
+    gap: 75px;
+}
