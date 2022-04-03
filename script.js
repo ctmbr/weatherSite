@@ -1,6 +1,6 @@
 var searchbar = document.querySelector("#search")
 var searchInput = document.querySelector("#input")
-searchbar.addEventListener("submit", getCoordinates)
+searchbar.addEventListener("submit", getCoordinates, saveSearch)
 var lat;
 var lon;
 var cityName;
@@ -29,6 +29,7 @@ function getCoordinates(e) {
             fetchApi()
         })
 }
+
 function fetchApi() {
     fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely,alerts&units=imperial&appid=8aa666e2e8f5aca02dc43f5c73f68184`)
         .then(function (response) {
@@ -40,10 +41,10 @@ function fetchApi() {
 }
 function getWeather(data) {
     console.log(data)
-    currentTemp.innerText = data.current.temp + " °F";
-    currentHumidity.innerText = data.current.humidity;
-    currentWind.innerText = data.current.wind_speed + 'mph';
-    currentUV.innerText = data.current.uvi
+    currentTemp.innerText = "Temp: " + data.current.temp + " °F";
+    currentHumidity.innerText = "Humidity: " + data.current.humidity;
+    currentWind.innerText = "Wind Speed: " + data.current.wind_speed + 'mph';
+    currentUV.innerText = "UV: " + data.current.uvi
 }
 function getDaily(data) {
     containerEl.innerHTML = ""
@@ -51,12 +52,17 @@ function getDaily(data) {
     console.log(daily)
     for (i = 0; i < daily.length; i++) {
         var card = document.createElement("div")
-        card.innerHTML = `<div class='card'>${daily[i].temp.day} °F</div>
-        <div class='card'>${daily[i].humidity}</div>
-        <div class='card'>${daily[i].wind_speed}mph</div>
-        <div class='card'>${daily[i].uvi}</div>`
+        card.innerHTML = `<div class='card'>Temp: ${daily[i].temp.day} °F</div>
+        <div class='card'>Humidity: ${daily[i].humidity}</div>
+        <div class='card'>Wind Speed: ${daily[i].wind_speed}mph</div>
+        <div class='card'>UV: ${daily[i].uvi}</div>`
         containerEl.appendChild(card)
 
 
     }
+}
+
+function saveSearch() {
+    var searchItem = searchInput.value.trim();
+    localStorage.setItem("searchItem", searchItem);
 }
