@@ -53,11 +53,14 @@ function getDaily(data) {
     var daily = data.daily
     console.log(daily)
     for (i = 1; i <= 5; i++) {
+
         var card = document.createElement("div")
-        card.innerHTML = `<div class='card'>Temp: ${daily[i].temp.day} °F</div>
-        <div class='card'>Humidity: ${daily[i].humidity}</div>
-        <div class='card'>Wind Speed: ${daily[i].wind_speed}mph</div>
-        <div class='card'>UV: ${daily[i].uvi}</div>`
+        card.classList.add('card')
+        card.innerHTML = `<h3>${new Date(daily[i].dt * 1000).toDateString()}</h3>
+        <div>Temp: ${daily[i].temp.day} °F</div>
+        <div>Humidity: ${daily[i].humidity}</div>
+        <div>Wind Speed: ${daily[i].wind_speed}mph</div>
+        <div>UV: ${daily[i].uvi}</div>`
         containerEl.appendChild(card)
 
 
