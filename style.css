@@ -51,7 +51,6 @@ button:focus {
     display: flex;
     gap: 100px;
     flex-wrap: wrap;
-    max-width: 90%;
 }
 
 .card {

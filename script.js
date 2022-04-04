@@ -1,9 +1,10 @@
 var searchbar = document.querySelector("#search")
 var searchInput = document.querySelector("#input")
-searchbar.addEventListener("submit", getCoordinates, saveSearch)
+searchbar.addEventListener("submit", getCoordinates)
 var lat;
 var lon;
 var cityName;
+var searchHistory = []
 var city = document.querySelector("#city")
 var currentTemp = document.querySelector("#currentTemp")
 var currentHumidity = document.querySelector("#currentHumidity")
@@ -25,6 +26,7 @@ function getCoordinates(e) {
             console.log(data[0].lat, data[0].lon, data[0].name);
             lat = data[0].lat; lon = data[0].lon;
             cityName = data[0].name
+            saveSearch(cityName)
             city.innerText = cityName
             fetchApi()
         })
@@ -50,7 +52,7 @@ function getDaily(data) {
     containerEl.innerHTML = ""
     var daily = data.daily
     console.log(daily)
-    for (i = 0; i < daily.length; i++) {
+    for (i = 1; i <= 5; i++) {
         var card = document.createElement("div")
         card.innerHTML = `<div class='card'>Temp: ${daily[i].temp.day} °F</div>
         <div class='card'>Humidity: ${daily[i].humidity}</div>
@@ -62,7 +64,13 @@ function getDaily(data) {
     }
 }
 
-function saveSearch() {
-    var searchItem = searchInput.value.trim();
-    localStorage.setItem("searchItem", searchItem);
+function saveSearch(searchItem) {
+    if (!searchHistory.includes(searchItem)) {
+        searchHistory.push(searchItem)
+        localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+    }
+
+}
+function displaySearchHistory() {
+
 }
